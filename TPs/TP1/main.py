@@ -1,26 +1,23 @@
 ######## IA02 ## TP1 ## BRANLY STEPHANE ########
 
-#### QUESTION 2 ####
+#### QUESTION 1 ####
 
 #decomp(n: int, nb_bits: int) -> List[bool] qui, étant donné un nombren, calcule la décomposition binaire en nb_bits de n. 
-#L’ordre des bits (croissant oudécroissant) est sans importance.
+#L’ordre des bits (croissant ou décroissant) est sans importance.
 
 def decomp(n: int, nb_bits: int):
     liste = []
-    copy = n
     for i in range (nb_bits):
-        r = pow(2,nb_bits-i-1)
-        if(copy>=r):
-            copy = copy-r
-            liste.append(True)
-        else:
-            liste.append(False)
-    return liste
+        liste.append(n % 2 != 0)
+        n = n//2
+    return liste[::-1]
 
 
 print(str(decomp(5,4)))
 
-#### QUESTION 1 ####
+
+#### QUESTION 2 ####
+
 #interpretation(["A", "B", "C"],[True, True, False]){"A": True, "B": True, "C": False}
 def interpretation(voc, vals):
     dic = dict()
@@ -30,33 +27,13 @@ def interpretation(voc, vals):
 
 print(str(interpretation(["A", "B", "C"],[True, True, False])))
 
-#genInterpretations(voc: List[str]) -> Generator[Dict[str, bool], None, None]
-# Using the generator pattern (an iterable)
-class Generator(object):
-    def __init__(self, l):
-        self.l = l
-        self.cur = 0
-        self.size = len(l)
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        return self.next()
-
-    def next(self):
-        if self.cur < self.size:
-            self.cur = self.cur + 1
-            return self.l[self.cur - 1]
-        raise StopIteration()
+#### QUESTION 3 ####
 
 def genInterpretations(voc):
-    gen = []
-    dec = []
-    for i in range(pow(2,len(voc))):
-        dec = decomp(i,len(voc))
-        gen.append(interpretation(voc,dec))
-    return Generator(gen)
+    for i in range(2**len(voc)):
+         dec = decomp(i,len(voc))
+         yield(interpretation(voc,dec))
 
 g = genInterpretations(["A", "B", "C"])
 print(next(g))
@@ -64,19 +41,17 @@ for i in genInterpretations(["toto", "tutu"]):
     print(i)
 
 
+#### QUESTION 4 ####
 
 #valuate(formula: str, interpretation: Dict[str, bool]) -> bool
-def valuate(formula:str, interpretation):
-    copy = formula
-    for voc, value in interpretation.items():
-        copy = copy.replace(voc,str(value))
-    return eval(copy)
+def valuate(formula, interpretation):
+    return eval(formula,interpretation)
 
-print(valuate("(A or B) and not(C)", {"A": True, "B": False, "C": False}))
 
+#### QUESTION 5 ####
 
 #formule : (A or B) and not(C)+---+---+---+-------+| A | B | C | eval. |+---+---+---+-------+| F | F | F |   F   || T | F | F |   T   || F | T | F |   T   || T | T | F |   T   || F | F | T |   F   || T | F | T |   F   || F | T | T |   F   || T | T | T |   F   |+---+---+---+-------+
-def table(formula:str, voc):
+def table(formula, voc):
     print("formule : "+formula)
     separation = ""
     line = ""
@@ -104,3 +79,39 @@ def table(formula:str, voc):
     print(separation)
 
 table("(A or B) and not(C)", ["A", "B", "C"])
+
+exp1 = "(A or B) and C"
+exp2 = "C"
+voc = ["A","B","C"]
+
+
+#### QUESTION 6 ####
+
+def isValid(f,voc):
+    for i in genInterpretations(voc):
+        if not valuate(f,i):
+            return False
+    return True
+
+def isContr(f,voc):
+    for i in genInterpretations(voc):
+        if valuate(f,i):
+            return False
+    return True
+
+def isConti(f,voc):
+    return (not isContr(f, voc) and not isValid(f,voc))
+
+print("Valid")
+print(isValid(exp1,voc))
+
+#### QUESTION 7 ####
+
+def isCons(f1, f2, voc):
+    genVoc = genInterpretations(voc)
+    for i in genVoc:
+         if(valuate(f1,i) and not valuate(f2,i)):
+              return False
+    return True
+
+print(isCons(exp1,exp2,voc))
