@@ -22,7 +22,6 @@ from graph import Graph
 from coloration import Coloration
 
 def help():
-    print("Error... your are UTC sad")
     print("-h : help()")
     print("-g graphFileName : Load a graph with the filename")
     print("-c nbColors : Genere DISMACS file to colorize the graph with nbColors")
@@ -73,7 +72,7 @@ def main(argv):
 
     if actions['colorGraph']:
         try:
-            colorisation = Coloration(graph,nbColors)
+            colorisation = Coloration(graph,int(nbColors))
             colorisation.generateDIMACSfile(outputfile)
         except:
             help()
