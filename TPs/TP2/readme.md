@@ -12,7 +12,7 @@
 -c nbColors : Genere DISMACS file to colorize the graph with nbColors
 -o outputFileName : Save the DISMACS file created
 -r nameOS : Run Gophersat using the outputFile nameOS in [linux, windows, macOS]
--i interpretation : Display text of an interpretation
+-i : Display text of an interpretation
 -d : Display image of an interpretation
 ```
 
