@@ -27,6 +27,7 @@ def help():
     print("-c nbColors : Genere DISMACS file to colorize the graph with nbColors")
     print("-o outputFileName : Save the DISMACS file created")
     print("-r nameOS : Run Gophersat using the outputFile nameOS in [linux, windows, macOS]")
+    print("-i interpretation : Display text of an interpretation")
 
 def main(argv):
     inputfile = None
@@ -39,8 +40,10 @@ def main(argv):
     actions['loadGraph'] = False
     actions['colorGraph'] = False
     actions['runGo'] = False
+    actions['interprete'] = False
+
     try:
-        opts, args = getopt.getopt(argv,"hg:c:o:r:",["gfile=","nbColors=","ofile=","rOS="])
+        opts, args = getopt.getopt(argv,"hg:c:o:r:i",["gfile=","nbColors=","ofile=","rOS="])
     except getopt.GetoptError:
         help()
         sys.exit(2)
@@ -59,6 +62,8 @@ def main(argv):
         elif opt in ("-r", "--rOS"):
             actions['runGo'] = True
             runOnOS = arg
+        elif opt in ("-i"):
+            actions['interprete'] = True
   
     
     if actions['loadGraph']:
@@ -82,13 +87,16 @@ def main(argv):
             fileName = outputfile
         else:
             fileName = "cubic_graph.txt"
-
+        output = ''
         if(runOnOS=='linux'):
-            os.system("../../gophersat/linux64/gophersat-1.1.6 "+str(fileName))
+            output = os.popen("../../gophersat/linux64/gophersat-1.1.6 "+str(fileName)).read()
         elif(runOnOS=='windows'):
-            os.system("../../gophersat/win64/gophersat-1.1.6.exe "+str(fileName))
+            output = os.popen("../../gophersat/win64/gophersat-1.1.6.exe "+str(fileName)).read()
         else:
-            os.system("../../gophersat/macos64/gophersat-1.1.6 "+str(fileName))
+            output = os.popen("../../gophersat/macos64/gophersat-1.1.6 "+str(fileName)).read()
+        print(output)
+        if(actions['interprete']):
+            colorisation.interprete(output)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
