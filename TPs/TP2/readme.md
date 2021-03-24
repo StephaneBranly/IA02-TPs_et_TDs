@@ -1,6 +1,9 @@
 # Colorization SAT problem
 ## requirements :
 `python 3`
+`sudo pip3 install pandas`
+`sudo pip3 install networkx`
+`sudo pip3 install matplotlib`    
 
 ## how to use it :
 `python3 main.py -h`

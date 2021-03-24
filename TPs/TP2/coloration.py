@@ -16,6 +16,11 @@
 
 #!/usr/bin/python
 
+import pandas as pd
+import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
+
 from graph import Graph
 
 colors = ["Red","Green","Blue","Cyan","Magenta","Yellow","Black","White","Purple","Pink"]
@@ -93,6 +98,47 @@ class Coloration():
                     i = v*self.nbColors + c
                     if int(solutionLine[i+1]) > 0:
                         print("Vertice "+str(v+1)+"  :   "+colors[c])
+
+    # Display the solution
+    def display(self,solution):
+        fr = []
+        to = []
+        colorsMap = []
+        nodes = []
+        for v in self.graph.vertices:
+            for e in self.graph.successors[int(v)]:
+                if(int(e)>int(v)):
+                    fr.append(v)
+                    to.append(e)
+
+        solutionLine = solution.split('\n')[2]
+        solutionLine = solutionLine.split(' ')
+        if self.nbColors <= len(colors):
+            for v in range(self.graph.getVerticesNumber()):
+                for c in range(self.nbColors):
+                    i = v*self.nbColors + c
+                    if int(solutionLine[i+1]) > 0:
+                        colorsMap.append(colors[c])
+                        nodes.append(v)
+
+        print(str(colorsMap))
+
+        df = pd.DataFrame({ 'from':fr, 'to':to})
+
+        carac = pd.DataFrame({ 'ID':nodes, 'colors':colorsMap })
+
+        G=nx.from_pandas_edgelist(df, 'from', 'to',create_using=nx.Graph())
+        G.nodes()
+        # # Here is the tricky part: I need to reorder carac, to assign the good color to each node
+        carac= carac.set_index('ID')
+        carac=carac.reindex(G.nodes())
+        nx.draw(G, with_labels=True, node_size=150, node_color=carac['colors'], pos=nx.spring_layout(G))
+        plt.title("spectral")
+        plt.show()
+
+
+ 
+        
     
 def fact(n):
     if n==0 :

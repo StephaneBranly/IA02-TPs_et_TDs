@@ -96,6 +96,7 @@ def main(argv):
             output = os.popen("../../gophersat/macos64/gophersat-1.1.6 "+str(fileName)).read()
         print(output)
         if(actions['interprete']):
+            colorisation.display(output)
             colorisation.interprete(output)
 
 if __name__ == "__main__":
