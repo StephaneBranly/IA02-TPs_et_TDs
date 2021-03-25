@@ -1,0 +1,19 @@
+c
+c TP2 - Exercice 3 - Stephane BRANLY
+c
+c Probleme de la licorne  
+c
+c 1 Mythique
+c 2 Immortelle
+c 3 Mammifere
+c 4 Corne
+c 5 Magique
+c
+p cnf 5 7
+-1 2 0
+1 -2 0
+1 3 0
+-3 4 0
+-2 4 0
+-4 5 0
+-5 0
