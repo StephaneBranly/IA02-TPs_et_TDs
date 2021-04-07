@@ -8,7 +8,7 @@
 #                                                     +++##+++::::::::::::::       +#+    +:+     +#+     +#+           #
 #                                                       ::::::::::::::::::::       +#+    +#+     +#+     +#+           #
 #                                                       ::::::::::::::::::::       #+#    #+#     #+#     #+#    #+#    #
-#    Update: 2021/04/07 16:16:49 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr #
+#    Update: 2021/04/07 16:19:30 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr #
 #                                                                                                                       #
 # ********************************************************************************************************************* #
 
@@ -140,16 +140,16 @@ def create_box_constraints() -> List[List[int]]: #TODO REVIEW THIS ALGO
                 for line in range(3):
                     l = list()
                     for n in range(9):
-                        l.append(cell_to_variable(i*3+col,j*3+i,n+1))
+                        l.append(cell_to_variable(i*3+col,j*3+line,n+1))
                     r.append(l)
     return r
 
 def create_value_constraints(grid: List[List[int]]) -> List[List[int]]:
-    r = list()
-    n = list()
+    r: List[List[int]] = []
+    n: List[int]= []
     for col in range(9):
         for line in range(9):
-            n = list()
+            n = []
             for v in range(9):
                 n.append(cell_to_variable(col,line,v+1))
             r = r + unique(n)
@@ -158,7 +158,7 @@ def create_value_constraints(grid: List[List[int]]) -> List[List[int]]:
     return r
 
 def generate_problem(grid: List[List[int]]) -> List[List[int]]:
-    r = list()
+    r:  List[List[int]] = list()
     r = r + create_line_constraints()
     r = r + create_column_constraints()
     r = r + create_box_constraints()
