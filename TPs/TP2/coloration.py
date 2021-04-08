@@ -52,7 +52,7 @@ class Coloration():
         return "c\nc  "+self.graph.getGraphFileName()+"\nc"
 
     def generateProblemHead(self):
-        nbClauses = self.nbVertices * (fact(self.nbColors)/2 + 1)
+        nbClauses = self.nbVertices * ((self.nbColors)*(self.nbColors-1))/2 + 1)
         for v in self.graph.successors:
             nbClauses = nbClauses + (len(self.graph.successors[v]) * self.nbColors) / 2
         nbVars = self.nbVertices * self.nbColors
