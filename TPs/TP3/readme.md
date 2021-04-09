@@ -8,7 +8,7 @@
 -h : help()
 -g gridFile : Load a grid with the filename
 -o outputFileName : Save the DISMACS file created
--s nameOS : Solve probleme using Gophersat, nameOS in [linux, windows, macos]
+-s nameOS : Solve problem using Gophersat, nameOS in [linux, windows, macos]
 ```
 
 ## examples :
