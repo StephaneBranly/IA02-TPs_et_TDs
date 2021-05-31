@@ -8,7 +8,7 @@
 #                                                       +++##+++::::::::::::::       +#+    +:+     +#+     +#+             #
 #                                                         ::::::::::::::::::::       +#+    +#+     +#+     +#+             #
 #                                                         ::::::::::::::::::::       #+#    #+#     #+#     #+#    #+#      #
-#      Update: 2021/05/31 10:58:34 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr   #
+#      Update: 2021/05/31 11:33:35 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr   #
 #                                                                                                                           #
 # ************************************************************************************************************************* #
 
@@ -86,6 +86,20 @@ def profondeur2(laby: Laby, depart: str, arrivee: str):
         s=file.pop()
         file=file + laby[s]
         print("file", file)
+
+def profIte(laby: Laby, depart:str, arrivee:str):
+    lim = 0
+    pileSommets = [depart]
+    while arrivee not in pileSommets:
+        lim += 1
+        pile = [(depart,0)]
+        pileSommets = [depart]
+        while pile and arrivee in pileSommets:
+            current = pile.pop(0)
+            if current[1] < lim:
+                for succ in reversed(laby[current[0]]):
+                    pile.insert(0,(succ, current[1]+1))
+                    pileSommets.insert(0,succ)
 
 
 def main(argv):
