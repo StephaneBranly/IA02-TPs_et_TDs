@@ -8,7 +8,7 @@
 #                                                       +++##+++::::::::::::::       +#+    +:+     +#+     +#+             #
 #                                                         ::::::::::::::::::::       +#+    +#+     +#+     +#+             #
 #                                                         ::::::::::::::::::::       #+#    #+#     #+#     #+#    #+#      #
-#      Update: 2021/05/27 12:01:27 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr   #
+#      Update: 2021/05/31 10:58:34 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr   #
 #                                                                                                                           #
 # ************************************************************************************************************************* #
 
@@ -43,6 +43,8 @@ def largeur(laby: Laby, depart: str, arrivee: str):
     successeurs: List = [depart]
     next: str = ""
     while successeurs: 
+        print("successeurs : ", successeurs)
+        print("visites : ", visites, "\n")  
         next = successeurs.pop(0)
         visites.append(next)
         chemin.append(next)
@@ -59,6 +61,8 @@ def profondeur(laby: Laby, depart: str, arrivee: str):
     successeurs: List = [depart]
     next: str = ""
     while successeurs: 
+        print("successeurs : ", successeurs)
+        print("visites : ", visites, "\n")  
         next = successeurs.pop()
         visites.append(next)
         chemin.append(next)
@@ -83,22 +87,9 @@ def profondeur2(laby: Laby, depart: str, arrivee: str):
         file=file + laby[s]
         print("file", file)
 
-def pileExploreLabyProf(laby, start, end):
-    pile=[start]
-    save=[]
-    print("pile : ", pile)
-    print("save : ", save, "\n")
-    while not(end in pile):
-        e=pile.pop(0)
-        save=save+[e]
-        for succ in reversed(laby[e]):
-            if succ not in save:
-                pile=[succ]+pile
-        print("pile : ", pile)
-        print("save : ", save, "\n")  
 
 def main(argv):
-    print(str(pileExploreLabyProf(Laby1, Laby1['Depart'], Laby1["Arrivee"])))
+    print(str(largeur(Laby1, Laby1['Depart'], Laby1["Arrivee"])))
 
 
 if __name__ == "__main__":
