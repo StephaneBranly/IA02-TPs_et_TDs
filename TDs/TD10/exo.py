@@ -8,7 +8,7 @@
 #                                                       +++##+++::::::::::::::       +#+    +:+     +#+     +#+             #
 #                                                         ::::::::::::::::::::       +#+    +#+     +#+     +#+             #
 #                                                         ::::::::::::::::::::       #+#    #+#     #+#     #+#    #+#      #
-#      Update: 2021/05/31 11:41:41 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr   #
+#      Update: 2021/05/31 12:10:28 by branlyst            ::::::::::::::::::::        ########      ###      ######## .fr   #
 #                                                                                                                           #
 # ************************************************************************************************************************* #
 
@@ -102,6 +102,17 @@ def profIte(laby: Laby, depart:str, arrivee:str):
                     pileSommets.insert(0,succ)
     return pileSommets
 
+def EG(laby, depart, arrivee):
+    pile = [(depart,DM(depart,arrivee))]
+    pileSommets = [depart]
+    visites = []
+    while arrivee not in pileSommets:
+        current = pile.pop(0)
+        visites.append(current[0])
+        for succ in laby[current[0]]:
+            if succ not in visites:
+                pile.append((succ, DM(succ, arrivee)))
+        pile = sorted(pile,reverse=False)
 
 def main(argv):
     print(str(profIte(Laby1, Laby1['Depart'], Laby1["Arrivee"])))
